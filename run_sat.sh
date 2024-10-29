@@ -16,4 +16,4 @@ time_limit=${3:-7200}
 cd gredu-dcj/src/
 ./dcj ../../$file_1_path ../../$file_2_path
 cd ../..
-timeout $time_limit python3 main.py gredu-dcj/src/simp_parameters
+timeout $time_limit time python3 main.py gredu-dcj/src/simp_parameters
