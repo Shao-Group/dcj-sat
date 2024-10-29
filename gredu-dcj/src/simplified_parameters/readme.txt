@@ -1,0 +1,1 @@
+Directory to temporarily store the simplified parameters before being passed into the sat solver for preprocessing.
