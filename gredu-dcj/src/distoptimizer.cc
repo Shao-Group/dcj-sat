@@ -61,27 +61,72 @@ int distoptimizer::solve()
 
 
 	// TODO
-	/*
-	printf("run ILP ...\n");
+	// Print the final state of the graph
+	// printf("Final graph state:\n");
 
-	ilp_base * lp = new ilp6(gr, gene_list, partners);
+	// Print vertices
+	vertex_iterator vi, vi_end;
+	// printf("Vertices:\n");
+	// for(tie(vi, vi_end) = vertices(gr); vi != vi_end; ++vi) {
+	// 	printf("Vertex: %d\n", (int)*vi);
+	// }
 
-	lp->set_timelimit(conf->ilp_timelimit);
-	lp->set_thread_count(1);
-	lp->model->getEnv().set(GRB_IntParam_MIPFocus, 1);
+	// Print edges
+	edge_iterator ei, ei_end;
+	// printf("Edges:\n");
+	// for(tie(ei, ei_end) = edges(gr); ei != ei_end; ++ei) {
+	// 	printf("Edge: (%d, %d)\n", (int)source(*ei, gr), (int)target(*ei, gr));
+	// }
 
-	lp->solve();
-	build_mapping(lp->pairs);
-	delete lp;
+	// Opening two files: one for vertices and one for edges
+	std::ofstream vertices_file("params/vertices.txt");
+	std::ofstream gr_file("params/gr.txt");
+	std::ofstream partners_file("params/partners.txt");
+	std::ofstream gene_list_file("params/gene_list.txt");
+	std::ofstream simplified_cycles_file("params/simplified_cycles.txt");
 
-	int n = sx.size() * 4;
-	vector<int> v(n);
-	int c = connected_components(bg, &v[0]);
-	printf("simplified cycles = %d\n", simplified_cycles);
-	printf("\ntotoal %5d adjacencies, total %10d cycles, DCJ distance = %5d\n", n / 4, c, n / 4 - c);
-	//print_breakpoint_graph();
-	*/
+	// Writing vertices to file
+	for(tie(vi, vi_end) = vertices(gr); vi != vi_end; ++vi) {
+		vertices_file << (int)*vi << "\n";  
+	}
 
+	// Writing adjacencies from gr to file
+	ugraph::vertex_iterator vertexIt, vertexEnd;
+	ugraph::adjacency_iterator adjIt, adjEnd;
+	for (tie(vertexIt, vertexEnd) = vertices(gr); vertexIt != vertexEnd; ++vertexIt) {
+		int vertex = *vertexIt;
+		gr_file << int(vertex);
+		// printf("Vertex %d:\n", vertex);
+		for (tie(adjIt, adjEnd) = adjacent_vertices(*vertexIt, gr); adjIt != adjEnd; ++adjIt) {
+			gr_file << " " << int(*adjIt);
+			// printf("  -> Adjacent to vertex %d\n", *adjIt);
+		}
+		gr_file << endl;
+	}
+
+	// Writing partners to file
+	for(int i = 0; i < partners.size(); i++){
+		partners_file << i << " " << partners[i] << endl;
+		// printf("%5d: %5d\n", i, partners[i]);
+	}
+
+
+	// Writing gene_list to file
+	for (int i = 0; i < gene_list.size(); i++) {
+		PI first_pair = gene_list[i].first;
+		int second = gene_list[i].second;
+		gene_list_file << first_pair.first << " " << first_pair.second << " " << second << endl;
+	}
+
+	// Writing simplified cycles to file
+	simplified_cycles_file << simplified_cycles;
+
+	vertices_file.close();
+	gr_file.close();
+	partners_file.close();
+	gene_list_file.close();
+	simplified_cycles_file.close();
+	
 	return 0;
 }
 
