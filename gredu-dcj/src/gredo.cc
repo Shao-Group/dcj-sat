@@ -48,8 +48,8 @@ int gredo::solve(const string & file1, const string & file2)
 	distoptimizer d(conf, gm1, gm2);
 	d.solve();
 
-	write_mapping(d.x2y, "mapping");
-	build_graph(d.x2y);
+	// write_mapping(d.x2y, "mapping");
+	// build_graph(d.x2y);
 	return 0;
 }
 
@@ -93,7 +93,7 @@ int gredo::build_graph(const MPG & m)
 	{
 		ex = sx[i].e1;
 		if(ex.g->x == 0) continue;
-		assert(m.find(ex.g) != m.end());
+		// assert(m.find(ex.g) != m.end());
 		gene * g = m.find(ex.g)->second;
 		ey = extremity(g, ex.b);
 
@@ -103,7 +103,7 @@ int gredo::build_graph(const MPG & m)
 			if(sy[k].e1 == ey) index = n1 + k * 2;
 			if(sy[k].e2 == ey) index = n1 + k * 2 + 1;
 		}
-		assert(index != -1);
+		// assert(index != -1);
 
 		add_edge(i * 2, index, gr);
 	}
@@ -113,7 +113,7 @@ int gredo::build_graph(const MPG & m)
 		ex = sx[i].e2;
 		if(ex.g->x == 0) continue;
 
-		assert(m.find(ex.g) != m.end());
+		// assert(m.find(ex.g) != m.end());
 		gene * g = m.find(ex.g)->second;
 		ey = extremity(g, ex.b);
 
@@ -123,12 +123,12 @@ int gredo::build_graph(const MPG & m)
 			if(sy[k].e1 == ey) index = n1 + k * 2;
 			if(sy[k].e2 == ey) index = n1 + k * 2 + 1;
 		}
-		assert(index != -1);
+		// assert(index != -1);
 
 		add_edge(i * 2 + 1, index, gr);
 	}
 
-	assert(num_vertices(gr) % 2 == 0);
+	// assert(num_vertices(gr) % 2 == 0);
 	for(int i = 0; i < num_vertices(gr) / 2; i++)
 	{
 		add_edge(i * 2, i * 2 + 1, gr);

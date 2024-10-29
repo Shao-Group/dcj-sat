@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cstdio>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
@@ -42,48 +43,15 @@ int distoptimizer::solve()
 
 		if(b == false) break;
 	}
-	
-	int num1 = 0;
-	int num2 = 0;
-	int num3 = 0;
-	for(int i = 0; i < num_vertices(gr) / 2; i++)
-	{
-		if(out_degree(i, gr) == 1) num1++;
-		if(out_degree(i, gr) == 2) num2++;
-		if(out_degree(i, gr) == 3) num3++;
-	}
-	/*
-	printf("%5d out of %5d has degree 1\n", num1, (int)num_vertices(gr) / 2);
-	printf("%5d out of %5d has degree 2\n", num2, (int)num_vertices(gr) / 2);
-	printf("%5d out of %5d has degree 3\n", num3, (int)num_vertices(gr) / 2);
-	printf("\nsimplified_cycles = %5d\n\n", simplified_cycles);
-	*/
 
-
-	// TODO
-	// Print the final state of the graph
-	// printf("Final graph state:\n");
-
-	// Print vertices
 	vertex_iterator vi, vi_end;
-	// printf("Vertices:\n");
-	// for(tie(vi, vi_end) = vertices(gr); vi != vi_end; ++vi) {
-	// 	printf("Vertex: %d\n", (int)*vi);
-	// }
-
-	// Print edges
 	edge_iterator ei, ei_end;
-	// printf("Edges:\n");
-	// for(tie(ei, ei_end) = edges(gr); ei != ei_end; ++ei) {
-	// 	printf("Edge: (%d, %d)\n", (int)source(*ei, gr), (int)target(*ei, gr));
-	// }
 
-	// Opening two files: one for vertices and one for edges
-	std::ofstream vertices_file("params/vertices.txt");
-	std::ofstream gr_file("params/gr.txt");
-	std::ofstream partners_file("params/partners.txt");
-	std::ofstream gene_list_file("params/gene_list.txt");
-	std::ofstream simplified_cycles_file("params/simplified_cycles.txt");
+	std::ofstream vertices_file("simp_parameters/vertices.txt");
+	std::ofstream gr_file("simp_parameters/gr.txt");
+	std::ofstream partners_file("simp_parameters/partners.txt");
+	std::ofstream gene_list_file("simp_parameters/gene_list.txt");
+	std::ofstream simplified_cycles_file("simp_parameters/simplified_cycles.txt");
 
 	// Writing vertices to file
 	for(tie(vi, vi_end) = vertices(gr); vi != vi_end; ++vi) {
