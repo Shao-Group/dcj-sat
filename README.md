@@ -39,8 +39,11 @@ pip install 'python-sat[aiger,approxmc,cryptosat,pblib]'
 
 ### Building the files
 ```sh
-# You will need to install automake to build dependencies. For example (using homebrew on mac)
+# You might have to install automake(if not already installed) to build dependencies. For example (using homebrew on mac)
 brew install automake
+```
+
+```sh
 # Make the build script executable and run it
 chmod +x build.sh
 ./build.sh
