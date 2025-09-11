@@ -45,7 +45,7 @@ int gredo::solve(const string & file1, const string & file2)
 	*/
 
 	printf("run distoptimizer ...\n");
-	distoptimizer d(conf, gm1, gm2);
+	distoptimizer d(conf, gm1, gm2, file1, file2);
 	d.solve();
 
 	// write_mapping(d.x2y, "mapping");

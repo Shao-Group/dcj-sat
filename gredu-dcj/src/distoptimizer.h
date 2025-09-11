@@ -15,11 +15,13 @@ typedef pair<PI, int> PII;
 class distoptimizer
 {
 public:
-	distoptimizer(config * _conf, genome * _g1, genome * _g2);
+	distoptimizer(config * _conf, genome * _g1, genome * _g2, const std::string& f1, const std::string& f2);
 	virtual ~distoptimizer();
 
 public:
 	config * conf;
+	std::string file1_name;
+	std::string file2_name;
 	
 	vector<adjacency> sx;
 	vector<adjacency> sy;

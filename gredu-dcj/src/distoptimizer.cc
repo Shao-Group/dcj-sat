@@ -7,11 +7,13 @@
 #include <cstdio>
 #include <algorithm>
 #include <fstream>
+#include <sys/stat.h>
 
 using namespace std;
 
-distoptimizer::distoptimizer(config * _conf, genome * gm1, genome * gm2)
-	: conf(_conf)
+distoptimizer::distoptimizer(config * _conf, genome * gm1, genome * gm2, 
+                             const std::string& f1, const std::string& f2)
+	: conf(_conf), file1_name(f1), file2_name(f2)
 {
 	build_adjacency_sets(gm1, gm2);
 	simplified_cycles = 0;
@@ -47,11 +49,26 @@ int distoptimizer::solve()
 	vertex_iterator vi, vi_end;
 	edge_iterator ei, ei_end;
 
-	std::ofstream vertices_file("simp_parameters/vertices.txt");
-	std::ofstream gr_file("simp_parameters/gr.txt");
-	std::ofstream partners_file("simp_parameters/partners.txt");
-	std::ofstream gene_list_file("simp_parameters/gene_list.txt");
-	std::ofstream simplified_cycles_file("simp_parameters/simplified_cycles.txt");
+	size_t pos1 = file1_name.find_last_of("/\\");
+	std::string base1 = (pos1 == std::string::npos) ? file1_name : file1_name.substr(pos1 + 1);
+	pos1 = base1.find_last_of(".");
+	if (pos1 != std::string::npos) base1 = base1.substr(0, pos1);
+
+	size_t pos2 = file2_name.find_last_of("/\\");
+	std::string base2 = (pos2 == std::string::npos) ? file2_name : file2_name.substr(pos2 + 1);
+	pos2 = base2.find_last_of(".");
+	if (pos2 != std::string::npos) base2 = base2.substr(0, pos2);
+
+	// Create directory
+	std::string dir_path = "simp_parameters/" + base1 + "_" + base2;
+	mkdir(dir_path.c_str(), 0777);
+
+	// Open files in new directory
+	std::ofstream vertices_file(dir_path + "/vertices.txt");
+	std::ofstream gr_file(dir_path + "/gr.txt");
+	std::ofstream partners_file(dir_path + "/partners.txt");
+	std::ofstream gene_list_file(dir_path + "/gene_list.txt");
+	std::ofstream simplified_cycles_file(dir_path + "/simplified_cycles.txt");
 
 	// Writing vertices to file
 	for(tie(vi, vi_end) = vertices(gr); vi != vi_end; ++vi) {
