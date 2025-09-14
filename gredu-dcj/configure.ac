@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.69])
 AC_INIT(gredu-dcj, 1.0, aks7832@psu.edu)
-AM_INIT_AUTOMAKE()
+AM_INIT_AUTOMAKE([tar-pax])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
