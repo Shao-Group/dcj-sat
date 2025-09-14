@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT(gredu-dcj, 1.0, aks7832@psu.edu)
+AC_INIT(dcj-sat-repo, 1.0, aks7832@psu.edu)
 AM_INIT_AUTOMAKE([tar-pax])
 AC_CONFIG_HEADERS([config.h])
 
