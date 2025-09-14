@@ -1,15 +1,8 @@
 import sys
 import time
-import os
 
-# Handle both direct execution and module execution
-try:
-    from reading_simplified_params.make_graph_from_params import create_final_parameters_from_file
-    from sat_solver.sat_solver_mcd import sat_solver_pipeline
-except ImportError:
-    # When installed as a package
-    from dcj_sat.reading_simplified_params.make_graph_from_params import create_final_parameters_from_file
-    from dcj_sat.sat_solver.sat_solver_mcd import sat_solver_pipeline
+from reading_simplified_params.make_graph_from_params import create_final_parameters_from_file
+from sat_solver.sat_solver_mcd import sat_solver_pipeline
 
 
 def main():
@@ -23,16 +16,6 @@ def main():
         sys.exit(1)
 
     folder_path = sys.argv[1]
-    
-    # Handle both direct simp_parameters path and subdirectory structure
-    if os.path.isdir(folder_path):
-        # Check if we need to navigate to a subdirectory
-        # (when called with just "simp_parameters" after dcj creates subdirs)
-        subdirs = [d for d in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, d))]
-        if subdirs and not os.path.exists(os.path.join(folder_path, 'vertices.txt')):
-            # If there's a subdirectory and no vertices.txt in current folder,
-            # assume we need to go into the subdirectory
-            folder_path = os.path.join(folder_path, subdirs[0])
 
     # -------- SIMPLIFICATION --------
 
