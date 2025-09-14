@@ -1,9 +1,6 @@
 bin_PROGRAMS = dcj
 
-dcj_CPPFLAGS = -I$(BOOST_HOME) -I$(GUROBI_HOME)/include
-dcj_LDFLAGS = -L$(GUROBI_HOME)/lib
-#dcj_LDADD = -lgurobi_c++ -lgurobi110
-#dcj_LDADD = -lgurobi_c++
+dcj_CPPFLAGS = -I$(BOOST_HOME)
 
 dcj_SOURCES = gene.h gene.cc \
 			  operation.h operation.cc \
