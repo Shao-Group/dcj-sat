@@ -8,6 +8,9 @@
 #include <algorithm>
 #include <fstream>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <cerrno>
+#include <cstdio>
 
 using namespace std;
 
@@ -59,9 +62,21 @@ int distoptimizer::solve()
 	pos2 = base2.find_last_of(".");
 	if (pos2 != std::string::npos) base2 = base2.substr(0, pos2);
 
-	// Create directory
-	std::string dir_path = "simp_parameters/" + base1 + "_" + base2;
-	mkdir(dir_path.c_str(), 0777);
+	// Build output dir names
+	std::string root_dir = "simp_parameters";
+	std::string dir_path = root_dir + "/" + base1 + "_" + base2;
+
+	// Ensure parent exists
+	if (mkdir(root_dir.c_str(), 0777) == -1 && errno != EEXIST) {
+		perror("mkdir simp_parameters");
+		return 1;
+	}
+
+	// Create the leaf directory
+	if (mkdir(dir_path.c_str(), 0777) == -1 && errno != EEXIST) {
+		perror(("mkdir " + dir_path).c_str());
+		return 1;
+	}
 
 	// Open files in new directory
 	std::ofstream vertices_file(dir_path + "/vertices.txt");

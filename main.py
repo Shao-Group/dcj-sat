@@ -2,6 +2,7 @@ import math
 import time
 import sys
 from pysat.solvers import Glucose4
+import shutil
 
 
 def make_vertices_s1_s2(vertices_file_path):
@@ -513,6 +514,12 @@ def main():
 
     end = time.time()
     print(f'Total Time Taken: {str(end - start)}')
+    
+    try:
+        shutil.rmtree(folder_path)
+        print(f"Deleted temporary folder: {folder_path}")
+    except Exception as e:
+        print(f"Warning: could not delete {folder_path}: {e}")
 
 
 if __name__ == "__main__":
