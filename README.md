@@ -64,9 +64,7 @@ CHROMOSOME_TYPE: Type of chromosome (1 for linear, 2 for circular).
 
 ### Running the test
 ```sh
-# Make the testing script executable and run it
-chmod +x run_sat.sh
-./run_sat.sh <path_to_g1_file> <path_to_g2_file>
+python run_sat.py <path_to_g1_file> <path_to_g2_file>
 ```
 
 ## Test Files
